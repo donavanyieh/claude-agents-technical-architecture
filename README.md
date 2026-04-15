@@ -233,7 +233,7 @@ Claude will:
 
 ## 💡 Example Scenarios
 
-### Scenario 1: Greenfield Project
+### Scenario 1: Create from scratch
 
 **Task**: "Design a microservices architecture for a B2B SaaS platform with 10k users that has project management module, and requires object detection on photo upload"
 
