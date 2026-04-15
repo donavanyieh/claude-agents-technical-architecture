@@ -17,10 +17,6 @@ This repository contains a specialized **Claude agent ecosystem** for architectu
 - 💰 **Cost Estimation** — Infrastructure cost projections across usage scenarios
 - 📊 **Diagram Generation** — Automated draw.io XML from architecture documentation
 
-## How to use
-- Clone repository and put everything (except the README.md) into a .claude folder within your specific project directory
-- 
-
 ---
 
 ## 🤖 Agent System
@@ -75,15 +71,6 @@ Skills provide specialized instructions for specific architecture tasks.
 |-------|------|-------------|
 | **design-tech-architecture** | [skills/design-tech-architecture/SKILL.md](.claude/skills/design-tech-architecture/SKILL.md) | Creating a new system architecture from requirements |
 | **review-security** | [skills/review-security/SKILL.md](.claude/skills/review-security/SKILL.md) | Security-focused review before finalizing architecture |
-
-### Supporting Resources
-
-**design-tech-architecture** includes:
-- [patterns.md](.claude/skills/design-tech-architecture/patterns.md) — Common architecture patterns with trade-offs
-- [checklist.md](.claude/skills/design-tech-architecture/checklist.md) — Pre-finalization checklist
-
-**review-security** includes:
-- [security-checklist.md](.claude/skills/review-security/security-checklist.md) — Comprehensive security review checklist
 
 ---
 
@@ -235,7 +222,6 @@ Claude will:
         │
         ├── design-tech-architecture/      # Architecture design skill
         │   ├── SKILL.md                   # Main skill definition
-        │   ├── patterns.md                # Architecture pattern catalog
         │   └── checklist.md               # Pre-finalization checklist
         │
         └── review-security/               # Security review skill
