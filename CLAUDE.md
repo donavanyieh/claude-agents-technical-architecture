@@ -1,111 +1,127 @@
-# Architecture Design & Review Skills System
+# Claude Architecture Skills System
 
-A comprehensive Claude-powered skills system for technical architecture design, security review, cost estimation, and diagram generation.
-
-Inspired to do this to semi-automate/produce a first draft of technical architecture for work. I have little experience creating architectures, and wanted to use GenAI to help brainstorm, make sense of ambiguity, and have a first architecture draft for me to edit.
-
-**From my experiments, this is useful to someone who can still make sense of technical jargon, ask the right questions, and challenge the outputs. Otherwise, it's cool to see it in action and create zero-shot architecture diagrams.**
+This is a **skills-based technical architecture workflow system** that helps you design, review, estimate costs, and visualize system architectures through specialized Claude skills.
 
 ---
 
-## 📋 Overview
+## 🎯 System Overview
 
-This repository contains a specialized **Claude skills system** for architecture workflows. The system automates:
+This repository contains 4 specialized skills for comprehensive architecture work:
 
-- 🏗️ **Architecture Design** — From requirements to comprehensive ARCHITECTURE.md
-- 🔒 **Security Review** — Structural security analysis with severity-rated findings
-- 💰 **Cost Estimation** — Infrastructure cost projections across usage scenarios
-- 📊 **Diagram Generation** — Automated draw.io XML from architecture documentation
+1. **design-tech-architecture** - Design architecture from requirements
+2. **review-security** - Security-focused architecture review
+3. **estimate-infrastructure-costs** - Cloud infrastructure cost estimation
+4. **draw-architecture-diagram** - Visual diagram generation
 
----
-
-## 🎯 Skills
-
-Skills provide specialized instructions for specific architecture tasks.
-
-| Skill | File | When to Use |
-|-------|------|-------------|
-| **design-tech-architecture** | [SKILL.md](.claude/skills/design-tech-architecture/SKILL.md) | Creating a new system architecture from requirements |
-| **review-security** | [SKILL.md](.claude/skills/review-security/SKILL.md) | Security-focused review before finalizing architecture |
-| **estimate-infrastructure-costs** | [SKILL.md](.claude/skills/estimate-infrastructure-costs/SKILL.md) | Estimating infrastructure costs across usage scenarios |
-| **draw-architecture-diagram** | [SKILL.md](.claude/skills/draw-architecture-diagram/SKILL.md) | Generating visual draw.io diagrams from architecture docs |
+Each skill is automatically activated based on user requests and produces structured outputs (ARCHITECTURE.md, SECURITY-REVIEW.md, COST-ESTIMATE.md, architecture-diagram.drawio).
 
 ---
 
-## 🚀 Usage
+## 🧭 Skill Routing Logic
 
-### Designing a New Architecture
+### When to Use Each Skill
 
-Ask Claude:
-```
-"Help me design a system for [your requirement]"
-```
+| User Request Pattern | Activate Skill | Prerequisites | Output |
+|---------------------|----------------|---------------|---------|
+| "Design a system for..." | `design-tech-architecture` | None | ARCHITECTURE.md |
+| "Help me architect..." | `design-tech-architecture` | None | ARCHITECTURE.md |
+| "Create architecture for..." | `design-tech-architecture` | None | ARCHITECTURE.md |
+| "Is this architecture secure?" | `review-security` | ARCHITECTURE.md | SECURITY-REVIEW.md |
+| "Do a security review" | `review-security` | ARCHITECTURE.md | SECURITY-REVIEW.md |
+| "Review security of..." | `review-security` | ARCHITECTURE.md | SECURITY-REVIEW.md |
+| "How much will this cost?" | `estimate-infrastructure-costs` | ARCHITECTURE.md | COST-ESTIMATE.md |
+| "Estimate costs for..." | `estimate-infrastructure-costs` | ARCHITECTURE.md | COST-ESTIMATE.md |
+| "What's the monthly cost?" | `estimate-infrastructure-costs` | ARCHITECTURE.md | COST-ESTIMATE.md |
+| "Draw the architecture" | `draw-architecture-diagram` | ARCHITECTURE.md | architecture-diagram.drawio |
+| "Generate a diagram" | `draw-architecture-diagram` | ARCHITECTURE.md | architecture-diagram.drawio |
+| "Visualize the system" | `draw-architecture-diagram` | ARCHITECTURE.md | architecture-diagram.drawio |
 
-Claude will:
-1. Activate the `design-tech-architecture` skill
-2. Ask clarifying questions about scale, constraints, team size
-3. Choose an appropriate architecture pattern
-4. Generate a complete ARCHITECTURE.md with:
-   - Component diagrams (ASCII)
-   - Tech stack with justifications
-   - Data model
-   - API design
-   - Risks and open questions
+### Trigger Keywords by Skill
 
----
+**design-tech-architecture**
+- "design", "architect", "create architecture", "build system", "tech stack", "system design", "microservices", "monolith"
 
-### Security Review
+**review-security**
+- "security", "secure", "vulnerabilities", "security review", "security analysis", "threats", "attack vectors"
 
-Ask Claude:
-```
-"Do a security review of my architecture"
-```
+**estimate-infrastructure-costs**
+- "cost", "costs", "budget", "pricing", "monthly", "expenses", "estimate", "how much"
 
-Claude will:
-1. Activate the `review-security` skill
-2. Work through the security checklist
-3. Produce SECURITY-REVIEW.md with prioritized findings
-
-**Prerequisites**: Existing ARCHITECTURE.md
+**draw-architecture-diagram**
+- "draw", "diagram", "visualize", "draw.io", "visual", "generate diagram"
 
 ---
 
-### Cost Estimation
+## 📚 Skills Reference
 
-Ask Claude:
-```
-"How much will this infrastructure cost?"
-```
+### 1. design-tech-architecture
 
-Claude will:
-1. Activate the `estimate-infrastructure-costs` skill
-2. Analyze all infrastructure components
-3. Produce cost estimates at low/mid/high usage scales
-4. Identify cost risks and optimization opportunities
+**Location**: `.claude/skills/design-tech-architecture/SKILL.md`
 
-**Prerequisites**: Existing ARCHITECTURE.md
+**Purpose**: Design a complete system architecture from requirements through to a structured technical specification.
+
+**When to use**:
+- User wants to design a new system or feature
+- Need help choosing appropriate tech stack
+- Planning scalability and component design
+- Creating ARCHITECTURE.md from scratch
+
+**Output**: `ARCHITECTURE.md` with component diagrams, tech stack, data model, API design, risks
+
+---
+
+### 2. review-security
+
+**Location**: `.claude/skills/review-security/SKILL.md`
+
+**Purpose**: Review system architecture for structural security weaknesses and produce a prioritized findings report.
+
+**When to use**:
+- User asks for security review of architecture
+- Before finalizing ARCHITECTURE.md
+- Want to identify security gaps in design
+- Need to understand security risks
+
+**Prerequisites**: Requires existing `ARCHITECTURE.md`
+
+**Output**: `SECURITY-REVIEW.md` with severity-rated findings, risks, and remediation steps
 
 ---
 
-### Generate Diagram
+### 3. estimate-infrastructure-costs
 
-Ask Claude:
-```
-"Draw the architecture diagram"
-```
+**Location**: `.claude/skills/estimate-infrastructure-costs/SKILL.md`
 
-Claude will:
-1. Activate the `draw-architecture-diagram` skill
-2. Parse ARCHITECTURE.md for components and relationships
-3. Auto-detect cloud provider (AWS, Azure, GCP)
-4. Generate draw.io XML with provider-specific icons
-5. Save as architecture-diagram.drawio
+**Purpose**: Estimate infrastructure and operational costs across different usage scenarios (low/mid/high).
 
-**Prerequisites**: Existing ARCHITECTURE.md
+**When to use**:
+- User asks about infrastructure costs
+- Budget planning needed
+- Want to understand monthly expenses
+- Need cost optimization recommendations
 
-**Output**: `architecture-diagram.drawio` — editable in [draw.io](https://app.diagrams.net)
+**Prerequisites**: Requires existing `ARCHITECTURE.md`
+
+**Output**: `COST-ESTIMATE.md` with cost breakdown, total estimates, risks, optimization strategies
 
 ---
+
+### 4. draw-architecture-diagram
+
+**Location**: `.claude/skills/draw-architecture-diagram/SKILL.md`
+
+**Purpose**: Convert architecture documentation into editable draw.io XML diagrams with cloud provider-specific icons.
+
+**When to use**:
+- User wants visual representation of architecture
+- Need diagrams for documentation or presentations
+- After finalizing ARCHITECTURE.md
+- Want editable diagram for stakeholder communication
+
+**Prerequisites**: Requires existing `ARCHITECTURE.md`
+
+**Output**: `architecture-diagram.drawio`
+
 
 ## 🔄 Recommended Workflows
 
@@ -181,12 +197,41 @@ Claude will:
 
 ---
 
+## 🎓 Best Practices
+
+### 1. Start with Requirements
+Always use **design-tech-architecture** first if you don't have ARCHITECTURE.md. The skill includes requirements gathering to clarify:
+- Scale expectations (users, requests/sec)
+- Team size and capabilities
+- Budget constraints
+- Existing infrastructure
+
+### 2. Run Security Review Early
+Use **review-security** before finalizing architecture. It's easier to fix structural security issues in design than after implementation.
+
+### 3. Consider Costs Throughout
+Run **estimate-infrastructure-costs** to understand financial implications. Cost constraints might influence architectural decisions.
+
+### 4. Iterate Based on Findings
+- Security findings → Update ARCHITECTURE.md → Re-run security review
+- Cost concerns → Adjust tech stack → Re-estimate costs
+- Architecture changes → Regenerate diagram
+
+### 5. Use Diagrams for Communication
+Run **draw-architecture-diagram** to create visual representations for:
+- Team alignment
+- Stakeholder presentations
+- Documentation
+- Design reviews
+
+---
+
 ## 🔧 Skill Activation Mechanics
 
 ### How Skills Are Activated
 
 Claude automatically activates skills based on:
-1. **Trigger phrases** in user requests
+1. **Trigger phrases** in user requests (see Routing Logic above)
 2. **Intent detection** from conversation context
 3. **File prerequisites** (e.g., won't suggest review-security without ARCHITECTURE.md)
 
@@ -273,37 +318,6 @@ Each skill has detailed documentation in `.claude/skills/`:
 
 ---
 
-## 💡 Example Scenarios
-
-### Scenario 1: Design from Scratch
-
-**Task**: "Design a microservices architecture for a B2B SaaS platform with 10K users that has a project management module and requires object detection on photo upload"
-
-**Claude activates**: `design-tech-architecture` skill
-
-**Process**:
-- Asks about team size, budget, existing infrastructure
-- Recommends event-driven microservices pattern
-- Generates ARCHITECTURE.md with Kubernetes, message queue, PostgreSQL, ML service
-- Suggests running security review → cost estimation → diagram generation
-
----
-
-### Scenario 2: Review Existing Design
-
-**Task**: "Review the security of my architecture"
-
-**Claude activates**: `review-security` skill
-
-**Process**:
-- Reads existing ARCHITECTURE.md
-- Works through security-checklist.md
-- Identifies vulnerabilities, risks, and best practice gaps
-- Produces SECURITY-REVIEW.md with prioritized findings
-- Recommends fixes and next steps
-
----
-
 ## ⚠️ Important Notes
 
 1. **ARCHITECTURE.md is required** for all skills except design-tech-architecture
@@ -340,37 +354,6 @@ Each skill has detailed documentation in `.claude/skills/`:
 
 ---
 
-## 📁 Project Structure
-
-```
-.
-├── README.md                              # This file
-├── claude.md                              # LLM routing guide
-├── LICENSE
-│
-└── .claude/                               # Skills definitions
-    └── skills/                            # Task-specific skills
-        │
-        ├── design-tech-architecture/      # Architecture design skill
-        │   ├── SKILL.md                   # Main skill definition
-        │   └── checklist.md               # Pre-finalization checklist
-        │
-        ├── review-security/               # Security review skill
-        │   ├── SKILL.md                   # Main skill definition
-        │   └── security-checklist.md      # Security checklist
-        │
-        ├── estimate-infrastructure-costs/ # Cost estimation skill
-        │   └── SKILL.md                   # Main skill definition
-        │
-        └── draw-architecture-diagram/     # Diagram generation skill
-            ├── SKILL.md                   # Main skill definition
-            └── diagram-guidelines.md      # Detailed diagram specs
-```
-
----
-
 ## 📞 Support
 
 For issues or improvements to the skills system, refer to the skill-specific SKILL.md files in `.claude/skills/` for detailed workflows and output formats.
-
-For LLM routing and skill activation logic, see [claude.md](./claude.md).
